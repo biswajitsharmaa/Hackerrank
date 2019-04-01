@@ -1,0 +1,97 @@
+//this program will not run since it is designed by feed automatic input
+//just understand the logic 
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    // Complete the breakingRecords function below.
+    static int[] breakingRecords(int[] scores) 
+    {
+        Stack<Integer> max = new Stack<Integer>();//stack for maximum 
+        Stack<Integer> min = new Stack<Integer>();//stack for minimum
+        int[] result = new int[2]; //array that will contains the result 
+        
+        int mi= scores[0],ma =scores[0] ;
+		//variable to compare the scores ma for the high scores and mi for low score
+					
+        for(int i = 0;i<scores.length; i++) // logic for filling the stack with values
+        {
+			//if the element in the scores if grater than that of	the first value then
+			//add that element in the high score , change the 
+                if(scores[i] >= ma)  		
+                {
+                max.add(scores[i]);
+                ma = scores[i];
+                min.add(mi);
+                }
+                else if(scores[i] <= mi )
+                {
+                    min.add(scores[i]);
+                    mi = scores[i];
+                    max.add(ma);
+                }
+        }
+        int k=0, j=0;
+        int ele1 = scores[0];
+        int ele2 = scores[0];
+		
+        for(int i= 1; i<max.size();i++)
+        {
+            if(max.elementAt(i) > ele1)
+            {
+                k++;
+                ele1 = max.elementAt(i);
+            }
+            if (min.elementAt(i) < ele2)
+            {
+                j++;
+                ele2 = min.elementAt(i);
+            }
+        }
+
+        result[0] = k;
+        result[1] = j;
+        return result;
+    }
+
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) throws IOException {
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        int n = scanner.nextInt();
+        scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+
+        int[] scores = new int[n];
+
+        String[] scoresItems = scanner.nextLine().split(" ");
+        scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+
+        for (int i = 0; i < n; i++) {
+            int scoresItem = Integer.parseInt(scoresItems[i]);
+            scores[i] = scoresItem;
+        }
+
+        int[] result = breakingRecords(scores);
+
+        for (int i = 0; i < result.length; i++) {
+            bufferedWriter.write(String.valueOf(result[i]));
+
+            if (i != result.length - 1) {
+                bufferedWriter.write(" ");
+            }
+        }
+
+        bufferedWriter.newLine();
+
+        bufferedWriter.close();
+
+        scanner.close();
+    }
+}
