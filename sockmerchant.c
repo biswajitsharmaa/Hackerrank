@@ -1,6 +1,7 @@
 // Complete the sockMerchant function below.
 int sockMerchant(int n, int ar_count, int* ar) 
 {
+//I am editing this to reflect it in the Termux
    
  
         int i, j,a,count=0;
